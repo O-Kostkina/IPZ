@@ -1,0 +1,8 @@
+PROGRAM prog1a;
+DEFFUNC
+func1 = 123 \ 421 , 312
+func3 = 1 \ 21 , 12
+func2 = 2 \ 42 , 32
+BEGIN
+
+END
