@@ -5,7 +5,7 @@
 <declarations> --> <math-function-declaration>
 <math-function-declaration> --> DEFFUNC <function-list> |<empty>
 <function-list> --> <function> <function-list> |<empty>
-<function> --> <function-identifier> = <con-stant><function-characteristic> ;
+<function> --> <function-identifier> = <constant><function-characteristic> ;
 <function-characteristic> --> \ <unsigned-integer> , <unsigned-integer>
 <constant> --> <unsigned-integer>
 <procedure-identifier> --> <identifier>

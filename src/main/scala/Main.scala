@@ -4,8 +4,13 @@
 object Main {
 
   def main(args : Array[String]) = {
-    LexemeAnalyzer("src/main/resources/program.txt", "result.txt").parse.foreach(println)
-
+    val res = LexemeAnalyzer("src/main/resources/program.txt").parse
+    println("Lexemes:")
+    res.lexemes.foreach(println)
+    println("Table:")
+    res.table.foreach(el => println(s"${el._1}: ${el._2}"))
+    println("Errors:")
+    res.errors.foreach(println)
   }
 
 }
