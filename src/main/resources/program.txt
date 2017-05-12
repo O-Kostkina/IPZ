@@ -1,15 +1,16 @@
-PROGRAM 1PROG1A;
+PROGRAM PROG1A;
 DEFFUNC
-1FUNC1 = 123 \ 421 , 312;
+FUNC1 = 123 \ 421 , 312;
 FUNC3 = 1 \ 21 , 12;
 FUNC2 = 2 \ 42 , 32;
-( COMMENT *)
-BEGIN лол
+(* COMMENT *)
+BEGIN
+
 (**)
 (*комент навіть * з зірочкою *)
 (*******)
 (*
     мультилайн
 
-
+*)
 END
