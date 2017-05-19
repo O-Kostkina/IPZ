@@ -1,5 +1,5 @@
 <signal-program> --> <program>
-<program> --> PROGRAM <procedure-identifier> ; <block>.
+<program> --> PROGRAM <procedure-identifier> ; <block>
 <block> --> <declarations> BEGIN <statements-list> END
 <statements-list> --> <empty>
 <declarations> --> <math-function-declaration>
