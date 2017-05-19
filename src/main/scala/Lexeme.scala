@@ -1,19 +1,27 @@
-import scala.collection.mutable.HashTable
-
 /**
   * Created by kostkinaoksana on 23.03.17.
   */
+
+object Lexeme{
+  def line(l: Lexeme) = l match {
+    case Delimiter(_, line, _, _) => line
+    case Keyword(_, line, _, _) => line
+    case UnsignedInteger(_, line, _, _) => line
+    case Identifier(_, line, _, _) => line
+  }
+}
+
 trait Lexeme
 
 trait ErrorLexeme extends Lexeme
 
-case class Delimiter(code: Int, literal: String) extends Lexeme
+case class Delimiter(position: Int, line: Int, code: Int, literal: String) extends Lexeme
 
-case class Keyword(code: Int, literal: String) extends Lexeme
+case class Keyword(position: Int, line: Int, code: Int, literal: String) extends Lexeme
 
-case class UnsignedInteger(code: Int, literal: String) extends Lexeme
+case class UnsignedInteger(position: Int, line: Int, code: Int, literal: String) extends Lexeme
 
-case class Identifier(code: Int, literal: String) extends Lexeme
+case class Identifier(position: Int, line: Int, code: Int, literal: String) extends Lexeme
 
 case class Comment(literal: String) extends Lexeme
 

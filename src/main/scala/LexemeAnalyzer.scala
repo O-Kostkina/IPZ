@@ -54,7 +54,7 @@ class LexemeAnalyzer(inFileName: String) {
           case i :: tail if ws.contains(i) || delimiters.contains(i) =>
             constantCount += 1
             constants.update(acc, constantCount)
-            (UnsignedInteger(constantCount, acc), input, pos)
+            (UnsignedInteger(pos, line, constantCount, acc), input, pos)
 
 
           case _ =>
@@ -88,14 +88,14 @@ class LexemeAnalyzer(inFileName: String) {
             processEmail(acc.toList ++ input, "", pos - acc.length)
           case _ =>
             keywords.get(acc) match {
-              case Some(code) => (Keyword(code, acc), input, pos)
+              case Some(code) => (Keyword(pos, line, code, acc), input, pos)
               case None =>
                 identifiers.get(acc) match {
-                  case Some(code) => (Identifier(code, acc), input, pos)
+                  case Some(code) => (Identifier(pos, line, code, acc), input, pos)
                   case None =>
                     identifierCount += 1
                     identifiers.update(acc, identifierCount)
-                    (Identifier(identifierCount, acc), input, pos)
+                    (Identifier(pos, line, identifierCount, acc), input, pos)
                 }
             }
 
@@ -140,7 +140,7 @@ class LexemeAnalyzer(inFileName: String) {
           Some(x._1) -> (x._2, x._3)
 
         case i :: tail if delimiters.contains(i) =>
-          (Some(Delimiter(i.toInt, i.toString)), (tail, pos + 1))
+          (Some(Delimiter(pos, line, i.toInt, i.toString)), (tail, pos + 1))
 
         case i :: tail if ws.contains(i) =>
           if (i == '\n') line += 1
