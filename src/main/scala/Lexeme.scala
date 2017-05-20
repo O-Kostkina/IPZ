@@ -110,9 +110,13 @@ case class FunctionList(contents: Either[EmptySyntaxStructure.type, (Function, F
       case Right((f, fl)) =>
         s"""
            #FunctionList --> Function -->  FunctionIdentifier -> ${f.functionIdentifier}
+           # |                    |   -->  Delimeter -> =
            # |                    |   -->  Constant -> ${f.constant.unsignedInteger}
+           # |                    |   -->  Delimeter -> \\
            # |                    |   -->  FunctionCharacteristic --> ${f.functionCharacteristic.ui1}
+           # |                    |   -->  Delimeter --> ,
            # |                                                  | --> ${f.functionCharacteristic.ui2}
+           # |                    |   -->  Delimeter -> ;
            # V
            #${fl.toString}
         """.stripMargin('#')
