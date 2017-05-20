@@ -16,7 +16,7 @@ class LexemeAnalyzer(inFileName: String) {
 
   private val letters = Set('A', 'B', 'C', 'D', 'E', 'F', 'G', 'H', 'I', 'J', 'K', 'L', 'M', 'N', 'O', 'P', 'Q', 'R', 'S', 'T', 'U', 'V', 'W', 'X', 'Y', 'Z')
 
-  private val delimiters = Set('\\', ';', '=', ',')
+  private val delimiters = Set('\\', ';', '=', ',', '+')
 
   private var identifierCount = 1000
 

@@ -1,3 +1,5 @@
+
+
 /**
   * Created by kostkinaoksana on 5/19/17.
   */
@@ -22,15 +24,46 @@ class SyntaxAnalyzer(lexemes: Seq[Lexeme]) {
     }
 
     def findBlock(input: Seq[Lexeme]): Either[ErrorSyntax, Block] = {
-      input match {
-        case declaration :+ Keyword(_, "BEGIN") :+ Keyword(_, "END") =>
-          findDeclarations(declaration).map(x => Block(x))
-
+      input.splitAt(input.indexOf(Keyword(403, "BEGIN"))) match {
+        case (declaration, Keyword(403, "BEGIN") +: statements :+ Keyword(_, "END")) =>
+          findStatementsList(statements) match {
+            case Right(st) =>
+              findDeclarations(declaration).map(x => Block(x, st))
+            case Left(e) => Left(e)
+          }
         case _ =>
           Left(ErrorSyntaxException("Unexpected position of BEGIN and END"))
       }
     }
-
+  
+    def findStatementsList(input: Seq[Lexeme]): Either[ErrorSyntax, StatementsList] = {
+      input match {
+        case Nil =>
+          Right(StatementsList(Left(EmptySyntaxStructure)))
+      
+        case _ =>
+          findStatement(input) match {
+            case (Left(e), _) => Left(e)
+            case (Right(f), tail) =>
+              findStatementsList(tail).map(fl => StatementsList(Right((f, fl))))
+          }
+      }
+    
+    
+    }
+  
+    def findStatement(input: Seq[Lexeme]): (Either[ErrorSyntax, Statement], Seq[Lexeme]) = {
+      input match {
+        case (i1: Identifier) +: Delimiter(_, "=") +: (i2: Identifier) +: Delimiter(_, "+") +: (i3: Identifier) +: Delimiter(59, ";") +: tail =>
+          (Right(Statement(i1, i2, i3)), tail)
+        case _ =>
+          (Left(ErrorSyntaxException("Syntax error at statement declaration")), input)
+      }
+    
+    }
+    
+    
+    
     def findDeclarations(input: Seq[Lexeme]): Either[ErrorSyntax, Declarations] = {
       findMathFunctionDeclaration(input).map(x => Declarations(x))
     }

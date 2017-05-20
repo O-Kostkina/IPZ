@@ -3,8 +3,8 @@ DEFFUNC
 FUNC1 = 123 \ 421 , 312;
 FUNC3 = 1 \ 21 , 12;
 FUNC2 = 2 \ 42 , 32;
-
 (* COMMENT *)
 BEGIN
-
+  A = B + C;
+  C = B + A;
 END

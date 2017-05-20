@@ -63,16 +63,40 @@ case class Program(procedureIdentifier: ProcedureIdentifier, block: Block) exten
   }
 }
 
-case class Block(declarations: Declarations) extends SyntaxStructure {
+case class Block(declarations: Declarations, statementsList: StatementsList) extends SyntaxStructure {
   override def toString: String = {
-    s"""
-       #Block -> Keyword -> BEGIN
-       # |  | -> StatementsList -> ${EmptySyntaxStructure.toString}
-       # |  | -> Keyword -> END
-       # |
-       # V
-       #${declarations.toString}
+    
+    statementsList.contents match {
+      case Left(e) =>
+        s"""
+           #Block -> StatementsList -> ${EmptySyntaxStructure.toString}
+           # |  | -> Keyword -> BEGIN
+           # |  | -> Keyword -> END
+           # |
+           # V
+           #${declarations.toString}
     """.stripMargin('#')
+      
+      case Right(sdl) =>
+        s"""
+           #Block -> StatementsList ----------------------------------> ${sdl._2}
+           # |  |               |
+           # |  |               V
+           # |  |            Statement -> Identifier -> ${sdl._1.id1}
+           # |  |                    | -> Delimenter -> =
+           # |  |                    | -> Identifier -> ${sdl._1.id2}
+           # |  |                    | -> Delimeter  -> +
+           # |  |                    | -> Identifier -> ${sdl._1.id3}
+           # |  |                    | -> Delimeter  -> ;
+           # |  |
+           # |  | -> Keyword -> BEGIN
+           # |  | -> Keyword -> END
+           # |
+           # V
+           #${declarations.toString}
+    """.stripMargin('#')
+    
+    }
   }
 }
 
@@ -112,9 +136,9 @@ case class FunctionList(contents: Either[EmptySyntaxStructure.type, (Function, F
            #FunctionList --> Function -->  FunctionIdentifier -> ${f.functionIdentifier}
            # |                    |   -->  Delimeter -> =
            # |                    |   -->  Constant -> ${f.constant.unsignedInteger}
-           # |                    |   -->  Delimeter -> \\
-           # |                    |   -->  FunctionCharacteristic --> ${f.functionCharacteristic.ui1}
-           # |                    |   -->  Delimeter --> ,
+           # |                    |   -->  FunctionCharacteristic -->  Delimeter -> \\
+           # |                                                  | --> ${f.functionCharacteristic.ui1}
+           # |                                                  | -->  Delimeter --> ,
            # |                                                  | --> ${f.functionCharacteristic.ui2}
            # |                    |   -->  Delimeter -> ;
            # V
@@ -125,8 +149,11 @@ case class FunctionList(contents: Either[EmptySyntaxStructure.type, (Function, F
 
   }
 
-
+  
 }
 
+case class StatementsList(contents: Either[EmptySyntaxStructure.type, (Statement, StatementsList)]) extends SyntaxStructure
+
+case class Statement(id1: Identifier, id2: Identifier, id3: Identifier) extends SyntaxStructure
 
 
