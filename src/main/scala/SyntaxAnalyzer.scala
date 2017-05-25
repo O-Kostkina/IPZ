@@ -107,6 +107,8 @@ class SyntaxAnalyzer(lexemes: Seq[Lexeme]) {
 
     }
 
+
+
     def findFunctionChar(input: Seq[Lexeme]): Either[ErrorSyntax, FunctionCharacteristic] = {
       input match {
         case Delimiter(_, "\\") +: (ui1: UnsignedInteger) +: Delimiter(_, ",") +: (ui2: UnsignedInteger) +: Nil =>
@@ -116,6 +118,7 @@ class SyntaxAnalyzer(lexemes: Seq[Lexeme]) {
           Left(ErrorSyntaxException("Syntax error at function characteristic declaration"))
       }
     }
+
 
 
     findProgram(lexemes)
