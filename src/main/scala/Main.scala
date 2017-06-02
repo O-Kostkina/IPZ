@@ -20,6 +20,13 @@ object Main {
           println(e)
         case Right(p) =>
           println(p.toString)
+          val cg = CodeGenerator(p)
+          cg.generateAsm match {
+            case Left(se) =>
+              println(se)
+            case Right(asm) =>
+              println(asm)
+          }
       }
     }
   }

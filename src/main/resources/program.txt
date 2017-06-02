@@ -1,8 +1,8 @@
 PROGRAM PROG1A;
 DEFFUNC
-FUNC1 = 123 \ 421 , 312;
-FUNC3 = 1 \ 21 , 12;
-FUNC2 = 2 \ 42 , 32;
+FUNC1 = 12 \ 210 , 312;
+FUNC2 = 1 \ 1 , 12;
+FUNC3 = 4 \ 100 , 200;
 (* COMMENT *)
 BEGIN
   A = B + C;
